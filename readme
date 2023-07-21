@@ -1,0 +1,25 @@
+
+usr: soyhernan7
+pwd: Mihotel123
+
+
+Probar Postman
+1. Almacenar el token de acceso:
+Una vez que recibas la respuesta de la solicitud anterior, verás un objeto JSON con el token de acceso. Debes extraer este token y almacenarlo para usarlo en las solicitudes posteriores.
+Copia el valor del token de acceso, que normalmente se encuentra en la propiedad access o access_token de la respuesta.
+Probar una URL protegida con el token de acceso:
+
+2. Crea una nueva solicitud GET en Postman.
+Ingresa la URL de la vista protegida que deseas probar, por ejemplo: http://localhost:8000/api/protected-view/.
+En la pestaña "Headers" de la solicitud, agrega un encabezado con el nombre "Authorization".
+En el valor del encabezado, coloca el token de acceso precedido por el tipo de token, que generalmente es "Bearer". Por ejemplo: Bearer <token_de_acceso>.
+Haz clic en "Send" para enviar la solicitud.
+
+ROOMS
+=====
+GET /rooms/: Recupera una lista de todas las habitaciones.
+POST /rooms/: Crea una nueva habitación.
+GET /rooms/{id}/: Recupera los detalles de una habitación específica.
+PUT /rooms/{id}/: Actualiza una habitación específica.
+PATCH /rooms/{id}/: Actualiza parcialmente una habitación específica.
+DELETE /rooms/{id}/: Elimina una habitación específica.
