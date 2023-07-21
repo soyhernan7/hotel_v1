@@ -10,6 +10,7 @@ from apps.user.models import User
 class Invoice(BaseModel):
     class PaymentMethod(models.TextChoices):
         CREDIT_CARD = 'CREDIT_CARD', 'Tarjeta Credito'
+        DEBIT_CARD = 'DEBIT_CARD', 'Tarjeta Debito'
         CASH = 'CASH', 'Efectivo'
         QR = 'QR', 'QR'
 

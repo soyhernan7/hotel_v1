@@ -13,6 +13,7 @@ class Room(models.Model):
     description = models.TextField('Description')
     price_per_day = models.DecimalField('Price per Day', max_digits=7, decimal_places=2, null=True, blank=True)
     discount_rate = models.PositiveIntegerField('Discount Rate', default=0)
+    photo = models.ImageField(null=True, upload_to='photo')
     is_available = models.BooleanField('Available',default=True)
 
     class Meta:

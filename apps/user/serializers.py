@@ -7,7 +7,7 @@ from apps.user.models import User
 class BaseUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'name', 'last_name')
+        fields = ('id', 'username', 'email', 'name', 'last_name','nit')
 
 
 class UserSerializer(BaseUserSerializer):
@@ -28,7 +28,7 @@ class UserRegisterSerializer(BaseUserSerializer):
 
 class UpdateUserSerializer(BaseUserSerializer):
     class Meta(BaseUserSerializer.Meta):
-        fields = ('username', 'email', 'name', 'last_name')
+        fields = ('username', 'email', 'name', 'last_name','nit')
 
 
 class PasswordSerializer(serializers.Serializer):
@@ -44,4 +44,4 @@ class PasswordSerializer(serializers.Serializer):
 
 class UserListSerializer(BaseUserSerializer):
     class Meta(BaseUserSerializer.Meta):
-        fields = ('id', 'username', 'email', 'name', 'last_name')
+        fields = ('id', 'username', 'email', 'name', 'last_name', 'nit')

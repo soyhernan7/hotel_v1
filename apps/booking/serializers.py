@@ -17,6 +17,7 @@ class BookingSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def validate(self, data):
+        # Valida los datos del modelo Booking antes de guardarlos.
         self._validate_checkin_date(data)
         self._validate_checkout_date(data)
         self._validate_room_availability(data)
@@ -24,6 +25,7 @@ class BookingSerializer(serializers.ModelSerializer):
         return data
 
     def _validate_checkin_date(self, data):
+        # Valida que 'checkin_date' sea mayor o igual a la fecha actual.
         checkin_date = data.get('checkin_date')
         if checkin_date and checkin_date < date.today():
             raise serializers.ValidationError(
@@ -31,6 +33,7 @@ class BookingSerializer(serializers.ModelSerializer):
             )
 
     def _validate_checkout_date(self, data):
+        # Valida que 'checkout_date' sea mayor o igual a 'checkin_date'.
         checkin_date = data.get('checkin_date')
         checkout_date = data.get('checkout_date')
         if checkin_date and checkout_date and checkin_date > checkout_date:
@@ -39,6 +42,7 @@ class BookingSerializer(serializers.ModelSerializer):
             )
 
     def _validate_room_availability(self, data):
+        # Valida que la habitación esté disponible.
         room = data.get('room')
         if room and not room.is_available:
             raise serializers.ValidationError(
@@ -46,6 +50,7 @@ class BookingSerializer(serializers.ModelSerializer):
             )
 
     def create(self, validated_data):
+        # Crea una reserva y marca la habitación como no disponible.
         room = validated_data['room']
         room.available = False
         room.save()
@@ -56,6 +61,7 @@ class BookingSerializer(serializers.ModelSerializer):
         return reservation
 
     def to_representation(self, instance):
+        # Convierte una instancia de booking en una representación customizada..
         fees = TotalAmountCalculator(instance).total_fees()
         return {
             'id': instance.id,
@@ -79,6 +85,7 @@ class BookingListSerializer(serializers.ModelSerializer):
         model = Booking
 
     def to_representation(self, instance):
+        # Convierte una instancia de booking en una representación customizada..
         return {
             'id': instance.id,
             'uuid': instance.uuid,
@@ -101,6 +108,7 @@ class BookingViewSerializer(serializers.ModelSerializer):
         # fields = '__all__'
 
     def to_representation(self, instance):
+        # Convierte una instancia de reserva en una representación personalizada para la vista detallada.
         fees = TotalAmountCalculator(instance).total_fees()
         return {
             'id': instance.id,
@@ -126,6 +134,7 @@ class BookingStatusSerializer(BookingViewSerializer):
         fields = '__all__'
 
     def validate(self, data):
+        # Valida que la reserva solo se pueda cambiar si en estado 'PENDING'.
         if self.instance.status != 'PENDING':
             raise serializers.ValidationError(
                 {

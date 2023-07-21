@@ -9,6 +9,7 @@ from apps.invoice.utils import TotalAmountCalculator
 
 
 class InvoiceListSerializer(serializers.ModelSerializer):
+    # Serializador para listar facturas.
     customer = serializers.StringRelatedField()
     booking = serializers.StringRelatedField()
 
@@ -18,11 +19,13 @@ class InvoiceListSerializer(serializers.ModelSerializer):
 
 
 class ProcessPaymentSerializer(serializers.ModelSerializer):
+    # Serializador para procesar el pago de un invoicea.
     class Meta:
         model = Invoice
         fields = ('id', 'booking', 'payment_method', 'total')
 
     def validate(self, attrs):
+        # Valida que la reserva esté en estado 'PENDING' y el total sea correcto antes de procesar el pago.
         booking = attrs['booking']
         total_amount = TotalAmountCalculator(booking).total_fees()
 
@@ -37,6 +40,7 @@ class ProcessPaymentSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
+        # Crea una factura y actualiza el estado de la reserva y la disponibilidad de la habitación.
         booking = validated_data['booking']
         total_amount = TotalAmountCalculator(booking).total_fees()
 
@@ -53,16 +57,19 @@ class ProcessPaymentSerializer(serializers.ModelSerializer):
         return invoice
 
     def update_booking_status(self, booking):
+        # Actualiza el estado de la reserva a 'PAID'.\
         booking.status = 'PAID'
         booking.save()
 
     def set_room_available(self, booking):
+        # Actualiza la disponibilidad de la habitación a True.
         room = booking.room
         room.available = True
         room.save()
 
 
 class InvoiceDetailSerializer(serializers.ModelSerializer):
+    # Serializador para ver detalles de una factura.
     customer = UserSerializer()
     booking = BookingSerializer()
 

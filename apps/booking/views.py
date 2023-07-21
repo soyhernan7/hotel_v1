@@ -18,6 +18,7 @@ class BookingViewSet(viewsets.ModelViewSet):
     pagination_class = pagination.PageNumberPagination
 
     def get_serializer_class(self):
+        # Devuelve el serializador adecuado a la acción solicitada(list,retrieve,etc).
         if self.action == 'list':
             return BookingListSerializer
         if self.action == 'retrieve':
@@ -27,7 +28,7 @@ class BookingViewSet(viewsets.ModelViewSet):
         return super().get_serializer_class()
 
     def list(self, request):
-        """ Returns paginated list of bookings """
+        # Lista todas las reservas con paginacion.
         page = self.paginate_queryset(self.queryset)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
@@ -37,6 +38,7 @@ class BookingViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['post'], url_path='make')
     def book(self, request):
+        # Realiza una nueva reserva.
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         reservation = serializer.save()
@@ -46,11 +48,12 @@ class BookingViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['patch'], url_path='cancel')
     def cancel(self, request, pk=None, **kwargs):
+        # Cancela una reserva existente.
         reservation = self.get_object()
         data = {'status': 'CANCELLED'}
         serializer = self.get_serializer(reservation, data=data, partial=True)
         serializer.is_valid(raise_exception=True)
         reservation = serializer.save()
-        send_booking_email(reservation, created=False)
+        # send_booking_email(reservation, created=False)
 
-        # return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)

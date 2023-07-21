@@ -72,7 +72,7 @@ class UserViewSet(GenericViewSet):
         user.save()
         return Response({'message': 'Usuario eliminado correctamente'})
 
-    @action(detail=True, methods=['patch'], url_path='set-password', url_name='set_password')
+    @action(detail=True, methods=['patch'], url_path='set-password', url_name='set-password')
     def set_password(self, request, pk=None):
         """ Establece una nueva contraseña para un usuario """
         user = get_object_or_404(User, pk=pk)

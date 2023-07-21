@@ -31,6 +31,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField('E-mail', max_length=255, unique=True, )
     name = models.CharField('Name', max_length=255, blank=True, null=True)
     last_name = models.CharField('Last Name', max_length=255, blank=True, null=True)
+    nit = models.CharField('Nit', max_length=255, blank=True, null=True)
     image = models.ImageField('Photo', upload_to='profiles/', max_length=255, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -40,6 +41,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = 'Users'
+        ordering = ['-id']
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email', 'name', 'last_name']
