@@ -1,44 +1,47 @@
 # RESERVAS DE HOTEL
 
-## Indice
+## Índice
 
-I. [Descripción](#i-descripcion)   
-II. [Instalacion con Docker](#ii-instalacion-con-docker)  
-III. [Documentacion de las APIs](#iii-documentacion-de-las-apis)  
-- [Endpoints](#endpoints)
-      1. [Endpoint 1](#1-endpoint-1)
-      2. [Endpoint 2](#2-endpoint-2)  
-IV. [Testing](#iv-testing)  
-V. [Convenciones texto a mostrar](#v-convenciones)  
+1. [Descripcion](#descripción)
+2. [Proceso Principal](#proceso-principal)
+3. [Documentacion](#documentacion)
+4. [Testing](#testing)
+5. [Cobertura de codigo](#cobertura-de-codigo)
+6. [Implementacion local](#implementacion-local)
 
-## I. DESCRIPCION
-Desarrollado con Django DRF con APIs REST, para la gestion de usuarios (user), cuartos (room), reservas (booking) y facturacion(invoice).
+## Descripcion
+Desarrollado con Django DRF con APIs REST, para la gestión de usuarios (user), cuartos (room), reservas (booking) y facturación(invoice).
 
-Arquitectura : Realizado de acuerdo Django MVC o MVT.  
-Estructura de proyecto :
+### Arquitectura
+Realizado de acuerdo a Django MVC o MVT.
 
-- hotel_v1/  Contiene la configuracion general del proyecto
-- apps/ Contiene los diferentes modulos (user,room,booking, invoice)
-  - base/ contiene el modelo general del cual hereda los demas para contener datos comunes para auditoria. 
-  - user/ contiene el modelo, la vista y el serializados, asi como librerias utilitarios para el modulo. 
-    - tests/ Contiene el base.py, factory.py para generar datos prueba y los tests respectivos.
-- htmlcov/ Cobertura de codigo de acuerdo a los tests (coverage) [index.html](htmlcov%2Findex.html).    
+### Estructura de Proyecto
+- `hotel_v1/`: Contiene la configuración general del proyecto
+- `apps/`: Contiene los diferentes módulos (user, room, booking, invoice)
+  - `base/`: contiene el modelo general del cual hereda los demás para contener datos comunes para auditoria
+  - `user/`: contiene el modelo, la vista y el serializado, así como librerías utilitarios para el módulo
+    - `tests/`: Contiene el base.py, factory.py para generar datos de prueba y los tests respectivos
+- `htmlcov/`: Cobertura de código de acuerdo a los tests (coverage) [index.html](htmlcov%2Findex.html)
 
-Base de datos : Para fines didacticos se uso la base de datos relacional SQLlite.      
-Autenticacion de usuario : JWT (JSON web token).  
-Manejo de contenedores : Docker el archivo para despliegue esta en [Dockerfile](Dockerfile).  
-Envio de correos electronicos : se configuro de forma Simple el envio de correos (send_mail) por cada reserva .  
-Despliegue : Infraestructura en nube con AWS EC2 disponible en http://ec2-3-144-82-130.us-east-2.compute.amazonaws.com  
-Documentacion: Se uso swagger para documentar los diferentes endpoints disponibles.
+### Detalles Técnicos
+- **Base de datos**: Para fines didácticos se usó la base de datos relacional SQLlite
+- **Autenticación de usuario**: JWT (JSON web token)
+- **Manejo de contenedores**: Docker el archivo para despliegue está en [Dockerfile](Dockerfile)
+- **Envío de correos electrónicos**: Se configuró de forma simple el envío de correos (send_mail) por cada reserva
+- **Despliegue**: Infraestructura en nube con AWS EC2 disponible en [link](http://ec2-3-144-82-130.us-east-2.compute.amazonaws.com)
+- **Documentación**: Se usó swagger para documentar los diferentes endpoints disponibles
 
-## III. Proceso Principal
+## Proceso Principal
+Los siguientes endpoints definen el flujo principal para crear un usuario, registrar un nuevo cuarto, reservar un cuarto y pagar el mismo.
 
-### Endpoints
-Comentario
+- [Endpoint 1: Crear un nuevo usuario](#endpoint-1-crear-un-nuevo-usuario)
+- [Endpoint 2: Registrar un nuevo cuarto](#endpoint-2-registrar-un-nuevo-cuarto)
+- [Endpoint 3: Realizar una nueva reserva de cuarto](#endpoint-3-realizar-una-nueva-reserva-de-cuarto)
+- [Endpoint 4: Obtener detalles de una reserva](#endpoint-4-obtener-detalles-de-una-reserva)
+- [Endpoint 5: Realizar un pago](#endpoint-5-realizar-un-pago)
+- [Endpoint 6: Obtener detalles de un pago](#endpoint-6-obtener-detalles-de-un-pago)
 
-#### 1. Crear un nuevo usuario
-
-Descripción breve de lo que hace este endpoint y qué datos se deben enviar en las solicitudes.
+### Endpoint 1: Crear un nuevo usuario
 
 - POST : {{base_url}}/users/register/
 - Request :
@@ -67,10 +70,7 @@ curl --location 'http://localhost:8000/api/users/' \
 }
  ```
 
-#### 2. Endpoint 2
-
-Descripción breve de lo que hace este endpoint y qué datos se deben enviar en las solicitudes.
-
+### Endpoint 2: Registrar un nuevo cuarto
 - POST : {{base_url}}/rooms/ 
 - Request:
  ```
@@ -95,8 +95,8 @@ curl --location 'http://localhost:8000/api/rooms/' \
   "is_available": true
 }
  ```
-3. Realizar una nueva reserva de cuarto
 
+### Endpoint 3: Realizar una nueva reserva de cuarto
 - POST : {{base_url}}/rooms/
 - Valores para type : 
 'SIM', 'Simple'
@@ -123,7 +123,8 @@ response :
   "checkout_date": "2023-07-30"
 }
  ```
-4. Obtener detalles de una reserva
+
+### Endpoint 4: Obtener detalles de una reserva
 - GET : {{base_url}}/booking/{ID}/
 - request :
  ```
@@ -143,7 +144,8 @@ curl --location 'http://localhost:8000/api/booking/25/'
     "status": "PAID"
 }
  ```
-5. Realizar un pago
+
+### Endpoint 5: Realizar un pago
 - POST : {{base_url}}/invoices/process/
 - Valores para  payment_method : 
 'CREDIT_CARD', 'Tarjeta Credito'
@@ -168,7 +170,8 @@ response :
   "total": "454.26"
 }
  ```
-6. Obtener detalles de un pago
+
+### Endpoint 6: Obtener detalles de un pago
 - GET : {{base_url}}/invoices/{ID}/
 - Request :
  ```
@@ -211,17 +214,23 @@ curl --location 'http://localhost:8000/api/invoices/3/'
     "description": null
 }
  ```
-## IV. Documentacion
-Para documentar los diferentes endpoint se uso Swagger el cual esta disponible en :
 
-http://ec2-3-144-82-130.us-east-2.compute.amazonaws.com/swagger
+## Documentacion
+Para documentar los diferentes endpoint se usó Swagger el cual está disponible en la nube en :
 
-## IV. Testing
-Se realizo las pruebas unitarias a los endpoints mas importantes.
- ```
+[Swagger UI](http://ec2-3-144-82-130.us-east-2.compute.amazonaws.com/swagger/)
+
+Además, se puede probar con Postman aceptando la invitación en:
+
+[Postman](https://app.getpostman.com/join-team?invite_code=d9fcfb83ce5d1755db4894a008a9c582&target_code=d43f2e2f896b934ec8d8758b800bd050)
+
+## Testing
+Se realizaron las pruebas unitarias a los endpoints más importantes.
+
+```bash
 python manage.py test -v2
- ```
- ```
+```
+```
 System check identified no issues (0 silenced).
 test_booking_can_be_cancelled (apps.booking.tests.test_booking_cancellation.BookingCancellationTestCase) ... ok
 test_booking_can_be_created (apps.booking.tests.test_booking_creation.BookingCreationTestCase) ... ok
@@ -246,7 +255,7 @@ Ran 17 tests in 6.995s
 
 OK
  ```
-## IV. Cobertura de codigo
+## Cobertura de codigo
 Se uso la herramienta coverage para medir la cobertura de las pruebas de la aplicacion.
 ```
 coverage run manage.py test
@@ -342,9 +351,7 @@ manage.py                                                                       
 -----------------------------------------------------------------------------------------------------
 TOTAL                                                                               870     56    94%
 ```
-El reporte generado esta en [htmlcov/index.html](htmlcov%2Findex.html)
-
-## IV. Implementacion local
+## Implementacion local
 Build y ejecución del contenedor:  
     ```
     sudo docker build -t mydjangoapp .
@@ -352,14 +359,4 @@ Build y ejecución del contenedor:
     ```
     sudo docker run -p 8000:8000 mydjangoapp
     ```
-
 La API estará disponible en http://localhost:8000/
-
-## V. Convenciones
-
-Aquí puedes incluir algunas convenciones y mejores prácticas para el desarrollo y documentación de tu API, como:
-
-- Uso de autenticación JWT para proteger las rutas sensibles.
-- Seguir las convenciones de nombres para las rutas y nombres de recursos.
-- Utilizar paginación para respuestas con muchos datos.
-- Incluir ejemplos claros en la documentación para facilitar el uso de la API.
