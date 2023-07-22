@@ -1,3 +1,4 @@
+#settings.py
 """
 Django settings for hotel_v1 project.
 
@@ -52,6 +53,7 @@ THIRD_APPS = [
     'simple_history',
     'rest_framework',
     'rest_framework_simplejwt',
+    'drf_yasg',
     # 'shortuuidfield',
     # 'django_seed',
     # 'drf_yasg',

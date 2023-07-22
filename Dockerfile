@@ -1,3 +1,4 @@
+#Dockerfile
 FROM python:3.10-slim
 
 #  la salida de python se envíe # directamente al terminal sin ser primero almacenada en búfer.

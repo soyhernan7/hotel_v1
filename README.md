@@ -51,6 +51,47 @@ Descripción breve de lo que hace este endpoint y qué datos se deben enviar en 
 - **Cuerpo de la solicitud**: JSON con los datos necesarios para crear un nuevo objeto.
 
 Ejemplo de uso:
+1. Registrar un usuario 
+POST
+{{base_url}}/users/register/
+
+{
+  "nit": "5256230122",
+  "username": "hernan.chambi",
+  "email": "hernan.chambi@example.com",
+  "name": "hernan",
+  "last_name": "chambi"
+  
+  
+}
+2. Regitrar un cuarto
+POST
+{{base_url}}/rooms
+
+{
+  "type": "SIM",
+  "description": "Habitación simple con vista al lago",
+  "price_per_day": 100.50,
+  "discount_rate": 10,
+  "is_available": true
+}
+3. Crear una reserva
+POST
+{{base_url}}/booking/make/
+{
+  "room": 2,
+  "guest": 2,
+  "checkin_date": "2023-07-26",
+  "checkout_date": "2023-07-30"
+}
+4. crear un pago para facturacion
+POST
+{{base_url}}/invoices/process/
+{
+  "booking": 24,
+  "payment_method": "CREDIT_CARD",
+  "total": "454.26"
+}
 
 
 
@@ -58,7 +99,9 @@ Ejemplo de uso:
 
 ## IV. Coverage
 Proporción de líneas de código ejecutadas durante las pruebas en relación con el total de líneas de código de la aplicación.
-
+coverage run manage.py test
+coverage report
+coverage html
 ## IV. Implementacion
 Proporción de líneas de código ejecutadas durante las pruebas en relación con el total de líneas de código de la aplicación.
 
