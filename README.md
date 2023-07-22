@@ -29,7 +29,7 @@ Realizado de acuerdo a Django MVC o MVT.
 - **Manejo de contenedores**: Docker el archivo para despliegue está en [Dockerfile](Dockerfile)
 - **Envío de correos electrónicos**: Se configuró de forma simple el envío de correos (send_mail) por cada reserva
 - **Despliegue**: Infraestructura en nube con AWS EC2 disponible en [link](http://ec2-3-144-82-130.us-east-2.compute.amazonaws.com)
-- **Documentación**: Se usó swagger para documentar los diferentes endpoints disponibles
+- **Documentación**: Se usó swagger para documentar los diferentes endpoints disponibles [link](http://ec2-3-144-82-130.us-east-2.compute.amazonaws.com/swagger)
 
 ## Proceso Principal
 Los siguientes endpoints definen el flujo principal para crear un usuario, registrar un nuevo cuarto, reservar un cuarto y pagar el mismo.
@@ -72,6 +72,12 @@ curl --location 'http://localhost:8000/api/users/' \
 
 ### Endpoint 2: Registrar un nuevo cuarto
 - POST : {{base_url}}/rooms/ 
+- Valores para 'type' :
+  'SIM', 'Simple' |
+  'DBL', 'Double' |
+  'MAT', 'Matrimonial' |
+  'SPL', 'Special'
+- price_per_day : es numerico con 2 decimales
 - Request:
  ```
 curl --location 'http://localhost:8000/api/rooms/' \
@@ -143,10 +149,11 @@ curl --location 'http://localhost:8000/api/booking/25/'
 ### Endpoint 5: Realizar un pago
 - POST : {{base_url}}/invoices/process/
 - Valores para  payment_method : 
-'CREDIT_CARD', 'Tarjeta Credito'
-'DEBIT_CARD', 'Tarjeta Debito'
-'CASH', 'Efectivo'
+'CREDIT_CARD', 'Tarjeta Credito' |
+'DEBIT_CARD', 'Tarjeta Debito'|
+'CASH', 'Efectivo'|
 'QR', 'QR'
+- total : es numerico con 2 decimales y esta validado por precio del cuarto, los dias y sus recargos.
 - request:
  ```
 curl --location 'http://localhost:8000/api/invoices/process/' \
