@@ -97,12 +97,7 @@ curl --location 'http://localhost:8000/api/rooms/' \
  ```
 
 ### Endpoint 3: Realizar una nueva reserva de cuarto
-- POST : {{base_url}}/rooms/
-- Valores para type : 
-'SIM', 'Simple'
-'DBL', 'Double'
-'MAT', 'Matrimonial'
-'SPL', 'Special'
+- POST : {{base_url}}/booking/make/
 - request:
  ```
 curl --location 'http://localhost:8000/api/booking/make/' \
