@@ -15,6 +15,7 @@ class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
         fields = '__all__'
+        # fields = 'uuid,reservation_date,checkin_date,checkout_date,total_nights'
 
     def validate(self, data):
         # Valida los datos del modelo Booking antes de guardarlos.
@@ -83,6 +84,7 @@ class BookingSerializer(serializers.ModelSerializer):
 class BookingListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
+        fields = '__all__'
 
     def to_representation(self, instance):
         # Convierte una instancia de booking en una representación customizada..
@@ -105,7 +107,7 @@ class BookingViewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Booking
-        # fields = '__all__'
+        fields = '__all__'
 
     def to_representation(self, instance):
         # Convierte una instancia de reserva en una representación personalizada para la vista detallada.
