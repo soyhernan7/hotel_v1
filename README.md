@@ -1,4 +1,4 @@
-# RESERVAS DE HOTEL
+# RESERVAS DE HOTEL.
 
 ## Índice
 
