@@ -11,9 +11,9 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="API de Usuarios",
+        title="APIS de DE RESERVAS PARA HOTEL",
         default_version='v1',
-        description="Documentación de la API de usuarios",
+        description="Documentación de la API de USER, ROOM, BOOKING Y INVOICE",
     ),
     public=True,
     permission_classes=(permissions.AllowAny,),
