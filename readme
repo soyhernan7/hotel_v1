@@ -23,3 +23,53 @@ GET /rooms/{id}/: Recupera los detalles de una habitación específica.
 PUT /rooms/{id}/: Actualiza una habitación específica.
 PATCH /rooms/{id}/: Actualiza parcialmente una habitación específica.
 DELETE /rooms/{id}/: Elimina una habitación específica.
+
+
+
+1. Registrar un usuario
+POST
+{{base_url}}/users/register/
+
+{
+  "nit": "5256230122",
+  "username": "hernan.chambi",
+  "email": "hernan.chambi@example.com",
+  "name": "hernan",
+  "last_name": "chambi"
+
+
+}
+2. Regitrar un cuarto
+POST
+{{base_url}}/rooms
+
+{
+  "type": "SIM",
+  "description": "Habitación simple con vista al lago",
+  "price_per_day": 100.50,
+  "discount_rate": 10,
+  "is_available": true
+}
+3. Crear una reserva
+POST
+{{base_url}}/booking/make/
+{
+  "room": 2,
+  "guest": 2,
+  "checkin_date": "2023-07-26",
+  "checkout_date": "2023-07-30"
+}
+4. crear un pago para facturacion
+POST
+{{base_url}}/invoices/process/
+{
+  "booking": 24,
+  "payment_method": "CREDIT_CARD",
+  "total": "454.26"
+}
+
+
+
+coverage run manage.py test
+coverage report
+coverage html
